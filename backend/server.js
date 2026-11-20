@@ -5,6 +5,7 @@ const cors = require("cors");
 
 const db = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
+const verifyToken = require("./middlewares/authmiddleware");
 
 const app = express();
 
@@ -23,7 +24,13 @@ app.use("/api/auth", authRoutes);
 
 // Verify database and start server
 const PORT = process.env.PORT || 5000;
-
+app.get("/api/auth/me", verifyToken, (req, res) => {
+    res.status(200).json({
+        message: "Authentication successful",
+        userId: req.user.userId,
+        organizationId: req.user.organizationId
+    });
+});
 async function startServer() {
     try {
         await db.query("SELECT 1");
