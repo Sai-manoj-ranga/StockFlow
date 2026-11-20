@@ -4,18 +4,40 @@ const express = require("express");
 const cors = require("cors");
 
 const db = require("./config/db");
+const authRoutes = require("./routes/authRoutes");
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
+// Test API
 app.get("/", (req, res) => {
-    res.send("Welcome to StockFlow API!");
+    res.json({
+        message: "Welcome to StockFlow API!"
+    });
 });
 
+// Signup routes
+app.use("/api/auth", authRoutes);
+
+// Verify database and start server
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+async function startServer() {
+    try {
+        await db.query("SELECT 1");
+
+        console.log("MySQL Connected Successfully!");
+
+        app.listen(PORT, () => {
+            console.log(`StockFlow API running on port ${PORT}`);
+        });
+
+    } catch (error) {
+        console.error("Database Connection Failed:", error.message);
+        process.exit(1);
+    }
+}
+
+startServer();
