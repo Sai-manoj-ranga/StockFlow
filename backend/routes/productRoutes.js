@@ -9,7 +9,8 @@ const {
     getAllProducts,
     getProductById,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    getDashboard
 } = require("../controllers/productController");
 
 // CREATE PRODUCT
@@ -17,7 +18,8 @@ router.post("/", verifyToken, createProduct);
 
 // GET ALL PRODUCTS
 router.get("/", verifyToken, getAllProducts);
-
+// INVENTORY DASHBOARD
+router.get("/dashboard", verifyToken, getDashboard);
 // GET PRODUCT BY ID
 router.get("/:id", verifyToken, getProductById);
 
@@ -25,4 +27,5 @@ router.get("/:id", verifyToken, getProductById);
 router.put("/:id", verifyToken, updateProduct);
 //Delete Product
 router.delete("/:id", verifyToken, deleteProduct);
+
 module.exports = router;

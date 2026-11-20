@@ -360,6 +360,80 @@ const deleteProduct = async (req, res) => {
 };
 
 
+// GET INVENTORY DASHBOARD
+const getDashboard = async (req, res) => {
+    try {
+        const organizationId = req.user.organizationId;
+
+        // Get inventory summary
+        const summarySql = `
+            SELECT
+                COUNT(*) AS totalProducts,
+                COALESCE(SUM(quantity), 0) AS totalQuantity
+            FROM products
+            WHERE organization_id = ?
+        `;
+
+        const [summaryResult] = await db.execute(
+            summarySql,
+            [organizationId]
+        );
+
+        // Get low-stock products
+        const lowStockSql = `
+            SELECT
+                product_id,
+                name,
+                sku,
+                quantity,
+                COALESCE(
+                    low_stock_threshold,
+                    (
+                        SELECT default_low_stock_threshold
+                        FROM organization_settings
+                        WHERE organization_id = ?
+                    ),
+                    10
+                ) AS effective_threshold
+            FROM products
+            WHERE organization_id = ?
+            AND quantity <= COALESCE(
+                low_stock_threshold,
+                (
+                    SELECT default_low_stock_threshold
+                    FROM organization_settings
+                    WHERE organization_id = ?
+                ),
+                10
+            )
+            ORDER BY quantity ASC
+        `;
+
+        const [lowStockProducts] = await db.execute(
+            lowStockSql,
+            [organizationId, organizationId, organizationId]
+        );
+
+        return res.status(200).json({
+            message: "Dashboard data retrieved successfully",
+            summary: {
+                totalProducts: Number(summaryResult[0].totalProducts),
+                totalQuantity: Number(summaryResult[0].totalQuantity),
+                lowStockCount: lowStockProducts.length
+            },
+            lowStockProducts
+        });
+
+    } catch (error) {
+        console.error("Dashboard Error:", error);
+
+        return res.status(500).json({
+            message: "Unable to retrieve dashboard data"
+        });
+    }
+};
 
 
-module.exports = { createProduct, getAllProducts, getProductById, updateProduct, deleteProduct };
+
+module.exports = { createProduct, getAllProducts, getProductById, 
+    updateProduct, deleteProduct, getDashboard };
