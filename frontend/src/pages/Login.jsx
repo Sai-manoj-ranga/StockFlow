@@ -25,6 +25,7 @@ function Login() {
             localStorage.setItem("token", response.data.token);
 
             alert("Login successful!");
+            window.location.href = "/dashboard";
 
             console.log(response.data);
 
