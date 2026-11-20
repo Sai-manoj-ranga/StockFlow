@@ -8,20 +8,28 @@ const db = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const verifyToken = require("./middlewares/authmiddleware");
 const productRoutes = require("./routes/productRoutes");
+const settingsRoutes = require("./routes/settingsRoutes");
 
 const app = express();
+console.log("authRoutes:", typeof authRoutes);
+console.log("productRoutes:", typeof productRoutes);
+console.log("settingsRoutes:", typeof settingsRoutes);
+console.log("verifyToken:", typeof verifyToken);
 
 app.use(cors());
 app.use(express.json());
 
 // Test API
 app.get("/", (req, res) => {
-    res.json({ message: "Welcome to StockFlow API!" });
+    res.json({
+        message: "Welcome to StockFlow API!"
+    });
 });
 
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/settings", settingsRoutes);
 
 // JWT verification test
 app.get("/api/auth/me", verifyToken, (req, res) => {
