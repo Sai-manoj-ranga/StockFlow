@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 function Dashboard() {
 
@@ -13,6 +14,7 @@ function Dashboard() {
     });
 
     const navigate = useNavigate();
+    <Navbar />
 
     useEffect(() => {
         const fetchDashboard = async () => {

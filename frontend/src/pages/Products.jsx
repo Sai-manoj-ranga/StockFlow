@@ -2,11 +2,11 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
 import { useNavigate } from "react-router-dom";
-
+import Navbar from "../components/Navbar";
 function Products() {
 
     const navigate = useNavigate();
-
+    <Navbar />
     const emptyForm = {
         name: "",
         sku: "",
