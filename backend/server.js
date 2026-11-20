@@ -6,7 +6,7 @@ const cors = require("cors");
 const db = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const verifyToken = require("./middlewares/authmiddleware");
-
+const productRoutes = require("./routes/productRoutes");
 const app = express();
 
 app.use(cors());
@@ -21,6 +21,7 @@ app.get("/", (req, res) => {
 
 // Signup routes
 app.use("/api/auth", authRoutes);
+app.use("/api/products", productRoutes);
 
 // Verify database and start server
 const PORT = process.env.PORT || 5000;
