@@ -315,5 +315,51 @@ const updateProduct = async (req, res) => {
 };
 
 
+// DELETE PRODUCT
+const deleteProduct = async (req, res) => {
+    try {
+        const productId = Number(req.params.id);
+        const organizationId = req.user.organizationId;
 
-module.exports = { createProduct, getAllProducts, getProductById, updateProduct };
+        // Validate product ID
+        if (!Number.isInteger(productId) || productId <= 0) {
+            return res.status(400).json({
+                message: "Invalid product ID"
+            });
+        }
+
+        const sql = `
+            DELETE FROM products
+            WHERE product_id = ?
+            AND organization_id = ?
+        `;
+
+        const [result] = await db.execute(sql, [
+            productId,
+            organizationId
+        ]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                message: "Product not found"
+            });
+        }
+
+        return res.status(200).json({
+            message: "Product deleted successfully",
+            productId: productId
+        });
+
+    } catch (error) {
+        console.error("Delete Product Error:", error);
+
+        return res.status(500).json({
+            message: "Unable to delete product"
+        });
+    }
+};
+
+
+
+
+module.exports = { createProduct, getAllProducts, getProductById, updateProduct, deleteProduct };

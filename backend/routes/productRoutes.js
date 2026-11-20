@@ -8,7 +8,8 @@ const {
     createProduct,
     getAllProducts,
     getProductById,
-    updateProduct
+    updateProduct,
+    deleteProduct
 } = require("../controllers/productController");
 
 // CREATE PRODUCT
@@ -22,5 +23,6 @@ router.get("/:id", verifyToken, getProductById);
 
 // UPDATE PRODUCT
 router.put("/:id", verifyToken, updateProduct);
-
+//Delete Product
+router.delete("/:id", verifyToken, deleteProduct);
 module.exports = router;
