@@ -14,12 +14,17 @@ function Dashboard() {
     });
 
     const navigate = useNavigate();
-    <Navbar />
 
     useEffect(() => {
+
         const fetchDashboard = async () => {
             try {
                 const token = localStorage.getItem("token");
+
+                if (!token) {
+                    navigate("/login");
+                    return;
+                }
 
                 const response = await api.get("/products/dashboard", {
                     headers: {
@@ -27,29 +32,40 @@ function Dashboard() {
                     }
                 });
 
-                setDashboard(response.data);
+                console.log("Dashboard API response:", response.data);
+
+                // Update dashboard values
+                setDashboard({
+                    totalProducts: response.data.summary.totalProducts,
+                    totalQuantity: response.data.summary.totalQuantity,
+                    lowStockCount: response.data.summary.lowStockCount,
+                    lowStockProducts: response.data.lowStockProducts || []
+                });
 
             } catch (error) {
-                alert("Session expired. Please login again.");
-                localStorage.removeItem("token");
-                navigate("/login");
+                console.error("Dashboard Error:", error);
+
+                if (error.response?.status === 401) {
+                    alert("Session expired. Please login again.");
+                    localStorage.removeItem("token");
+                    navigate("/login");
+                } else {
+                    alert("Unable to load dashboard. Please try again.");
+                }
             }
         };
 
         fetchDashboard();
-    }, [navigate]);
 
-    const logout = () => {
-        localStorage.removeItem("token");
-        navigate("/login");
-    };
+    }, [navigate]);
 
     return (
         <div className="dashboard">
 
+            <Navbar />
+
             <header>
-                <h2>StockFlow Dashboard</h2>
-                <button onClick={logout}>Logout</button>
+                <h2>Stock Details</h2>
             </header>
 
             <div className="dashboard-cards">
@@ -84,6 +100,7 @@ function Dashboard() {
                 </thead>
 
                 <tbody>
+
                     {dashboard.lowStockProducts.map((product) => (
                         <tr key={product.product_id}>
                             <td>{product.name}</td>
@@ -98,6 +115,7 @@ function Dashboard() {
                             <td colSpan="4">No low-stock products</td>
                         </tr>
                     )}
+
                 </tbody>
             </table>
 

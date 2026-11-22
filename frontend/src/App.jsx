@@ -1,5 +1,4 @@
-
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
@@ -10,16 +9,14 @@ import Settings from "./pages/Settings";
 function ProtectedRoute({ children }) {
     const token = localStorage.getItem("token");
 
-    return token ? children : <Navigate to="/login" replace />;
+    return token ? children : <Login />;
 }
 
 function App() {
     return (
         <BrowserRouter>
             <Routes>
-
                 <Route path="/" element={<Signup />} />
-
                 <Route path="/login" element={<Login />} />
 
                 <Route
@@ -30,14 +27,16 @@ function App() {
                         </ProtectedRoute>
                     }
                 />
+
                 <Route
                     path="/products"
                     element={
-                    <ProtectedRoute>
-                     <Products />
-                    </ProtectedRoute>
+                        <ProtectedRoute>
+                            <Products />
+                        </ProtectedRoute>
                     }
                 />
+
                 <Route
                     path="/settings"
                     element={
@@ -46,7 +45,6 @@ function App() {
                         </ProtectedRoute>
                     }
                 />
-
             </Routes>
         </BrowserRouter>
     );

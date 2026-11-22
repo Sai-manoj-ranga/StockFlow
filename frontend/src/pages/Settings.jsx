@@ -7,7 +7,6 @@ import Navbar from "../components/Navbar";
 function Settings() {
 
     const navigate = useNavigate();
-    <Navbar />
     const [threshold, setThreshold] = useState(10);
     const [loading, setLoading] = useState(true);
 
@@ -77,6 +76,7 @@ function Settings() {
 
     return (
         <div className="settings-page">
+            <Navbar />
 
             <h2>Organization Settings</h2>
 

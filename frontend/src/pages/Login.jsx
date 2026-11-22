@@ -1,8 +1,11 @@
 
 import { useState } from "react";
 import api from "../services/api";
+import { useNavigate, Link } from "react-router-dom";
 
 function Login() {
+
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         email: "",
@@ -25,9 +28,8 @@ function Login() {
             localStorage.setItem("token", response.data.token);
 
             alert("Login successful!");
-            window.location.href = "/dashboard";
 
-            console.log(response.data);
+            navigate("/dashboard");
 
         } catch (error) {
             alert(
@@ -63,6 +65,11 @@ function Login() {
                 />
 
                 <button type="submit">Login</button>
+
+                <p className="signup-link">
+                    Don't have an account?{" "}
+                    <Link to="/">Create Account</Link>
+                </p>
 
             </form>
         </div>

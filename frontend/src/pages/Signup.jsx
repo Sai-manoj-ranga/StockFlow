@@ -1,8 +1,10 @@
 
 import { useState } from "react";
 import api from "../services/api";
+import { useNavigate, Link } from "react-router-dom";
 
 function Signup() {
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         organizationName: "",
@@ -21,13 +23,13 @@ function Signup() {
         e.preventDefault();
 
         try {
-            const response = await api.post("/auth/signup", formData);
+            await api.post("/auth/signup", formData);
 
-            alert("Signup successful!");
+            alert("Account created successfully! Please login.");
 
-            localStorage.setItem("token", response.data.token);
+            localStorage.removeItem("token");
 
-            console.log(response.data);
+            navigate("/login");
 
         } catch (error) {
             alert(
@@ -73,6 +75,11 @@ function Signup() {
                 />
 
                 <button type="submit">Create Account</button>
+
+                <p className="login-link">
+                    Already registered?{" "}
+                    <Link to="/login">Login here</Link>
+                </p>
 
             </form>
         </div>

@@ -252,3 +252,276 @@ body {
 .navbar button:hover {
     background: #b91c1c;
 }
+
+/* GLOBAL STYLES */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f1f5f9;
+    color: #1e293b;
+}
+
+/* AUTHENTICATION */
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #dbeafe, #eff6ff);
+}
+
+.auth-form {
+    width: 100%;
+    max-width: 400px;
+    padding: 35px;
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.auth-form h2 {
+    text-align: center;
+    color: #2563eb;
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.auth-form h3 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #475569;
+}
+
+.auth-form input {
+    width: 100%;
+    padding: 13px;
+    margin-bottom: 16px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    outline: none;
+}
+
+.auth-form input:focus,
+.product-form input:focus,
+.product-form textarea:focus,
+.settings-form input:focus {
+    border-color: #2563eb;
+}
+
+/* BUTTONS */
+button {
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.auth-form button,
+.product-form button,
+.settings-form button {
+    width: 100%;
+    padding: 13px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 7px;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 35px;
+    background: #0f172a;
+    color: white;
+}
+
+.brand {
+    color: #60a5fa;
+    font-size: 25px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: #cbd5e1;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.nav-links a.active {
+    color: #60a5fa;
+}
+
+.navbar button {
+    padding: 10px 18px;
+    background: #dc2626;
+    color: white;
+    border: none;
+    border-radius: 6px;
+}
+
+/* DASHBOARD */
+.dashboard {
+    padding: 35px;
+}
+
+.dashboard h2 {
+    margin-bottom: 25px;
+}
+
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    margin-bottom: 35px;
+}
+
+.dashboard-card {
+    padding: 28px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+    border-left: 5px solid #2563eb;
+}
+
+.dashboard-card h3 {
+    color: #64748b;
+    font-size: 15px;
+}
+
+.dashboard-card h1 {
+    color: #2563eb;
+    margin-top: 15px;
+    font-size: 32px;
+}
+
+/* PRODUCTS */
+.products-page {
+    padding: 35px;
+}
+
+.product-form,
+.settings-form {
+    max-width: 650px;
+    padding: 28px;
+    margin: 25px 0 35px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+}
+
+.product-form h3,
+.settings-form h3 {
+    margin-bottom: 22px;
+}
+
+.product-form input,
+.product-form textarea,
+.settings-form input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+}
+
+.product-form textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.product-form button {
+    margin-bottom: 8px;
+}
+
+/* TABLES */
+.products-page table,
+.dashboard table {
+    width: 100%;
+    margin-top: 20px;
+    background: white;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.products-page th,
+.products-page td,
+.dashboard th,
+.dashboard td {
+    padding: 14px;
+    border-bottom: 1px solid #e2e8f0;
+    text-align: left;
+}
+
+.products-page th,
+.dashboard th {
+    background: #e2e8f0;
+    color: #334155;
+}
+
+/* SETTINGS */
+.settings-page {
+    padding: 35px;
+}
+
+.settings-form label {
+    display: block;
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+.settings-form p {
+    color: #64748b;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+
+    .navbar {
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .nav-links {
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .dashboard-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard,
+    .products-page,
+    .settings-page {
+        padding: 18px;
+    }
+
+    .products-page {
+        overflow-x: auto;
+    }
+
+    .products-page table,
+    .dashboard table {
+        min-width: 600px;
+    }
+}
+

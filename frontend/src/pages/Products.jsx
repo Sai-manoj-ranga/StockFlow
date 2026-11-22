@@ -6,7 +6,6 @@ import Navbar from "../components/Navbar";
 function Products() {
 
     const navigate = useNavigate();
-    <Navbar />
     const emptyForm = {
         name: "",
         sku: "",
@@ -144,6 +143,7 @@ function Products() {
 
     return (
         <div className="products-page">
+            <Navbar />
 
             <h2>StockFlow - Product Management</h2>
 
